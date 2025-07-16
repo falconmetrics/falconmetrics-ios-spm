@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'FalconMetrics'
-  s.version          = '0.2.3'
+  s.version          = '0.2.4'
   s.summary          = 'FalconMetrics iOS SDK'
   s.description      = <<-DESC
 FalconMetrics SDK for iOS applications. Provides precise mobile ad attribution for iOS apps.
@@ -14,9 +14,14 @@ FalconMetrics SDK for iOS applications. Provides precise mobile ad attribution f
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.7'
   
-  s.vendored_frameworks = 'FalconMetricsSDK.xcframework'
-  s.xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(inherited) "${PODS_XCFRAMEWORKS_BUILD_DIR}/FalconMetricsSDK"' }
-  
+  # This command runs after the pod is downloaded. It renames the xcframework
+  # to match the module name, which solves the linker issue.
+  s.prepare_command = <<-CMD
+    mv FalconMetricsSDK.xcframework FalconMetrics.xcframework
+  CMD
+
+  s.vendored_frameworks = 'FalconMetrics.xcframework'
+
   # Exclude i386 architecture while supporting arm64 for M1/M2 simulators
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
