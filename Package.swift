@@ -15,8 +15,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "FalconMetrics",
-            url: "https://falconmetrics-sdk.s3.eu-west-1.amazonaws.com/ios/0.2.2/FalconMetricsSDK.xcframework.zip",
-            checksum: "3933aac73b5253a4a579f855df4642a22206c9a2178ea2361d91b01bdaebbf8a"
+            url: "https://falconmetrics-sdk.s3.eu-west-1.amazonaws.com/ios/0.3.0/FalconMetricsSDK.xcframework.zip",
+            checksum: "0e264b04994dfc294fcfe1aeadf9e0a000548da810db089fdd24ae8f301b3024"
         )
     ]
 )
