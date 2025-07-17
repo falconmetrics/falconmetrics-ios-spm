@@ -1,10 +1,36 @@
 FalconMetrics SDK License Addendum
 
-This SDK is licensed, not sold. By downloading, integrating, or using this SDK,
-you agree to the FalconMetrics Terms of Use and SDK License Addendum located at:
+IMPORTANT: This SDK is licensed, not sold. By downloading, integrating, or using this SDK, you agree to the FalconMetrics Terms of Use and this SDK License Addendum, located at: https://www.falconmetrics.io/terms.
 
-https://www.falconmetrics.io/terms
+1. Grant of License:
+Subject to your compliance with the FalconMetrics Terms of Use and this Addendum, FalconMetrics LLC ("FalconMetrics") hereby grants you a non-exclusive, worldwide, royalty-free (or specify if there's a fee structure, e.g., "subject to payment of applicable license fees"), non-transferable, and revocable license to:
 
-Unauthorized reproduction, redistribution, or reverse engineering of this SDK is strictly prohibited.
+    a. Use: Use the SDK solely for the purpose of developing, testing, and integrating your own software applications ("Your Application") with FalconMetrics services.
+    b. Integrate: Incorporate the SDK, in its object code form only, as an embedded component of Your Application.
+    c. Distribute: Reproduce and distribute the SDK, in its object code form only, solely as an integrated and inseparable component of Your Application to your end-users. This includes the right to sublicense the SDK to your end-users as part of Your Application, provided that Your Application is distributed under terms no less protective of FalconMetrics than this Addendum.
+
+2. Restrictions:
+Except as expressly permitted in Section 1, you shall not, and shall not permit any third party to:
+
+    a. Reproduce, distribute, sublicense, sell, lease, lend, or transfer the SDK on a standalone basis.
+    b. Modify, adapt, translate, reverse engineer, decompile, disassemble, or attempt to derive the source code of the SDK, except to the extent such activities are expressly permitted by applicable law notwithstanding this limitation.
+    c. Remove, alter, or obscure any copyright, trademark, or other proprietary rights notices from the SDK or any accompanying materials.
+    d. Use the SDK to develop applications that compete with FalconMetrics' products or services, as determined by FalconMetrics in its sole discretion.
+    e. Use the SDK for any unlawful purpose or in any manner that violates any applicable law or regulation.
+
+3. No Other Rights:
+No rights or licenses are granted by FalconMetrics, by implication, estoppel, or otherwise, under any intellectual property rights not expressly granted in this Addendum.
+
+4. Ownership:
+FalconMetrics retains all right, title, and interest in and to the SDK, including all intellectual property rights therein. The SDK is protected by copyright and other intellectual property laws.
+
+5. Disclaimer of Warranties; Limitation of Liability:
+THE SDK IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND. FALCONMETRICS DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. FALCONMETRICS SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SDK. For full details, please refer to the FalconMetrics Terms of Use.
+
+6. Termination:
+(Details on termination conditions, e.g., for breach of terms, often found in the main Terms of Use.)
+
+7. Governing Law:
+(Standard legal clause, often found in the main Terms of Use.)
 
 © 2025 FalconMetrics LLC. All rights reserved.
