@@ -14,13 +14,7 @@ The FalconMetrics iOS SDK enables seamless tracking of user conversion events in
 Add the following to your App's `Podfile`:
 
 ```ruby
-# Pointing to the official CocoaPods master repository
-source 'https://cdn.cocoapods.org/'
-# Pointing to the FalconMetrics private repository
-source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git'
-
-....
- s.dependency 'FalconMetrics', '0.4.1'
+pod 'FalconMetrics', '1.0.0'
 ```
 
 ### Swift Package Manager
@@ -29,7 +23,7 @@ Add the following to your App's `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git", from: "0.4.1")
+    .package(url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git", from: "1.0.0")
 ]
 ```
 
@@ -117,6 +111,111 @@ Task {
         .track()
 }
 ```
+
+## IDFA and App Tracking Transparency
+
+The SDK provides methods to handle IDFA (Identifier for Advertisers) and App Tracking Transparency compliance:
+
+### Prerequisites
+Add NSUserTrackingUsageDescription to your Info.plist with a clear purpose string.
+
+```xml
+<key>NSUserTrackingUsageDescription</key>
+<string>We use IDFA to track user behavior and improve our services.</string>
+```
+
+- Ensure your privacy manifest (PrivacyInfo.xcprivacy) accurately declares tracking if applicable.
+- Only show the ATT prompt when status is `.notDetermined` and after context-setting UI.
+
+### Request IDFA Permission
+
+Request permission to track users across apps and websites:
+
+```swift
+Task {
+    let current = FalconMetricsSdk.shared.getTrackingAuthorizationStatus()
+    if current == .notDetermined {
+        let status = await FalconMetricsSdk.shared.requestIDFAPermission()
+        print("Tracking authorization status: \(status)")
+    } else {
+        print("Tracking authorization status (no prompt): \(current)")
+    }
+}
+```
+
+### Check Current Authorization Status
+
+Get the current App Tracking Transparency authorization status:
+
+```swift
+let status = FalconMetricsSdk.shared.getTrackingAuthorizationStatus()
+switch status {
+case .authorized:
+    print("Tracking is authorized")
+case .denied:
+    print("Tracking is denied")
+case .notDetermined:
+    print("Tracking authorization not determined")
+case .restricted:
+    print("Tracking is restricted")
+@unknown default:
+    print("Unknown tracking status")
+}
+```
+
+### Get IDFA
+
+Retrieve the IDFA if tracking is authorized:
+
+```swift
+if let idfa = FalconMetricsSdk.shared.getIDFA() {
+    print("IDFA: \(idfa)")
+} else {
+    print("IDFA not available - tracking not authorized")
+}
+```
+
+## Tracking Control
+
+The SDK provides methods to enable or disable tracking for privacy compliance:
+
+### Enable/Disable Tracking
+
+Control whether the SDK tracks events:
+
+```swift
+// Disable tracking (for privacy compliance)
+Task {
+    await FalconMetricsSdk.shared.setTracking(enabled: false)
+}
+
+// Re-enable tracking
+Task {
+    await FalconMetricsSdk.shared.setTracking(enabled: true)
+}
+```
+
+### Check Tracking Status
+
+Check if tracking is currently enabled:
+
+```swift
+Task {
+    let isEnabled = await FalconMetricsSdk.shared.isTrackingEnabled()
+    if isEnabled {
+        print("Tracking is enabled")
+    } else {
+        print("Tracking is disabled")
+    }
+}
+```
+
+**Important Notes:**
+- Tracking is **enabled by default** when the SDK is first initialized
+- When tracking is disabled, all event tracking calls are ignored
+- SKAdNetwork postback initialization is skipped when tracking is disabled
+- The tracking preference is persisted across app launches
+- This setting is independent of IDFA/ATT authorization status
 
 ## Best Practices
 
