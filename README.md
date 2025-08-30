@@ -14,7 +14,7 @@ The FalconMetrics iOS SDK enables seamless tracking of user conversion events in
 Add the following to your App's `Podfile`:
 
 ```ruby
-pod 'FalconMetrics', '1.0.0'
+pod 'FalconMetrics', '0.5.0'
 ```
 
 ### Swift Package Manager
@@ -23,7 +23,7 @@ Add the following to your App's `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git", from: "1.0.0")
+    .package(url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git", from: "0.4.1")
 ]
 ```
 
@@ -126,6 +126,7 @@ Add NSUserTrackingUsageDescription to your Info.plist with a clear purpose strin
 
 - Ensure your privacy manifest (PrivacyInfo.xcprivacy) accurately declares tracking if applicable.
 - Only show the ATT prompt when status is `.notDetermined` and after context-setting UI.
+- Defensive behavior: If NSUserTrackingUsageDescription is missing or empty, the SDK will NOT present the ATT prompt to avoid the system crash and will return `.denied`. An error will be logged to help you diagnose the issue.
 
 ### Request IDFA Permission
 
@@ -142,6 +143,10 @@ Task {
     }
 }
 ```
+
+#### Troubleshooting
+
+- Missing NSUserTrackingUsageDescription: The ATT dialog will not be shown and the call will return `.denied`. Add the key to your app target's Info.plist with a meaningful string value.
 
 ### Check Current Authorization Status
 
