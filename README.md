@@ -14,7 +14,7 @@ The FalconMetrics iOS SDK enables seamless tracking of user conversion events in
 Add the following to your App's `Podfile`:
 
 ```ruby
-pod 'FalconMetrics', '0.5.0'
+pod 'FalconMetrics', '1.1.0'
 ```
 
 ### Swift Package Manager
@@ -23,7 +23,7 @@ Add the following to your App's `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git", from: "0.4.1")
+    .package(url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git", from: "1.1.0")
 ]
 ```
 
@@ -49,6 +49,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Task { await initTask.value }
     
     return true
+}
+```
+
+#### IP Address Collection Setting
+
+You can control how the SDK handles IP addresses sent to FalconMetrics during initialization using the `ipAddressCollection` parameter. This helps you meet regional privacy requirements (e.g., GDPR/CCPA).
+
+Options (default is `.full`):
+
+- `.full` — Send full IP address
+- `.anonymized` — Send anonymized/obfuscated IP address
+- `.disabled` — Do not send IP address
+
+Example:
+
+```swift
+Task {
+    await FalconMetricsSdk.shared.initialize(
+        apiKey: "YOUR_API_KEY",
+        developerDiagnostics: false,
+        ipAddressCollection: .anonymized // .full, .anonymized, or .disabled
+    )
 }
 ```
 
@@ -93,9 +115,9 @@ Task {
 
 // Track a subscription event
 Task {
-    await FalconMetricsSdk.shared.createSubscribeBuilder()
+    await FalconMetricsSdk.shared.createSubscriptionBuilder()
         .withCurrency("USD")
-        .withpredictedLtvValueInCents(10000)
+        .withPredictedValueInCents(10000)
         .track()
 }
 
@@ -105,12 +127,58 @@ Task {
 Task {
     await FalconMetricsSdk.shared.createCustomEventBuilder()
         .withEventName("custom_event")
-        .withEventAttributes(["key1": "value1", "key2": 100])
+        .withAttributes(["key1": "value1", "key2": 100])
         .withCurrency("USD")
         .withRevenueInCents(10000)
         .track()
 }
 ```
+
+### User Data (Optional)
+
+You can attach optional user data to any event to improve attribution accuracy and downstream matching. Provide only fields you have collected with proper user consent.
+
+Available fields on `UserData`:
+
+- `email`
+- `phoneNumber`
+- `firstName`
+- `lastName`
+- `postalCode`
+- `city`
+- `state`
+- `dateOfBirth` (e.g., "1990-05-23")
+- `country` (ISO 3166-1 alpha-2, e.g., "US")
+
+Example:
+
+```swift
+Task {
+    let user = UserData(
+        email: "jane.doe@example.com",
+        phoneNumber: "+1-555-867-5309",
+        firstName: "Jane",
+        lastName: "Doe",
+        postalCode: "94105",
+        city: "San Francisco",
+        state: "CA",
+        dateOfBirth: "1990-05-23",
+        country: "US"
+    )
+
+    await FalconMetricsSdk.shared.createPurchaseBuilder()
+        .withItemIds(["sku-001"]) 
+        .withQuantity(1)
+        .withProductPrice(4999)
+        .withCurrency("USD")
+        .track(userData: user) // Attach user data here
+}
+```
+
+Notes:
+
+- User data is optional; pass `nil` or omit `userData` if you do not wish to include it.
+- Ensure your privacy disclosures and consent mechanisms cover the fields you send.
 
 ## IDFA and App Tracking Transparency
 
