@@ -14,7 +14,7 @@ The FalconMetrics iOS SDK enables seamless tracking of user conversion events in
 Add the following to your App's `Podfile`:
 
 ```ruby
-pod 'FalconMetrics', '1.1.0'
+pod 'FalconMetrics', '1.1.1'
 ```
 
 ### Swift Package Manager
@@ -69,7 +69,7 @@ Task {
     await FalconMetricsSdk.shared.initialize(
         apiKey: "YOUR_API_KEY",
         developerDiagnostics: false,
-        ipAddressCollection: .anonymized // .full, .anonymized, or .disabled
+        trackingOptions: TrackingOptions(ipAddressCollection: .anonymized) // .full, .anonymized, or .disabled
     )
 }
 ```
@@ -290,6 +290,22 @@ Task {
 - The tracking preference is persisted across app launches
 - This setting is independent of IDFA/ATT authorization status
 
+### Update IP Address Collection at Runtime
+
+If you need to change how IP addresses are handled after initialization (for example, when a user updates their privacy consent), you can update the tracking options at runtime:
+
+```swift
+// Switch to anonymized IP collection at runtime
+FalconMetricsSdk.shared.updateTrackingOptions(
+    trackinOptions: TrackingOptions(ipAddressCollection: .anonymized)
+)
+
+// Or disable sending IP address entirely
+FalconMetricsSdk.shared.updateTrackingOptions(
+    trackinOptions: TrackingOptions(ipAddressCollection: .disabled)
+)
+```
+
 ## Best Practices
 
 1. **Initialize Early**: Initialize the SDK as early as possible in your app's lifecycle to ensure all events are captured.
@@ -315,3 +331,4 @@ Task {
 © 2025 FalconMetrics LLC. All rights reserved.
 
 This SDK is licensed under the FalconMetrics SDK License Addendum and is subject to the FalconMetrics Terms of Use, available at: https://www.falconmetrics.io/terms
+
